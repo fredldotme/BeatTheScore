@@ -8,25 +8,26 @@ description: |
 
   This app supports loading Guitar Pro 5 files, which can often be found for free on the
   internet. These can be placed in `~/snap/beatthescore/current/Beat the Score` for easy
-  access. It then visualizes the learning session as either:
+  access. It then visualizes the session as either:
 
   - Piano Roll
-  - Score View
-  - or Tabulature
+  - Score
+  - or Tablature
 
   Beat The Score gives you direct feedback about your accuracy of hitting notes and shows
-  you your total score at the end.
+  you your total score at the end. There's also a "Training mode" that stops at every
+  note so that you can slowly focus on playing your instrument right.
 
   Supported instrument types:
 
   - MIDI keyboards
   - Guitars using audio analysis through the microphone
 
-  Released under the GNU GPLv2.
+  Released under the GNU GPLv2+.
 
 confinement: strict
 grade: stable
-license: GPL-2.0-only
+license: GPL-2.0-or-later
 website: https://github.com/Beat-The-Score/BeatTheScore
 donation: https://paypal.me/beidl
 
