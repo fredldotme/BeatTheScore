@@ -51,19 +51,24 @@ int main(int argc, char *argv[])
     QtQuick2ApplicationViewer viewer;
 
     // We really should set a predictable path for settings
-    #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
         QDir configPath(QString(getenv("HOME")) + "/.config/beatthescore");
         if(!configPath.exists()) {
             configPath.mkdir(configPath.path());
         }
         viewer.engine()->setOfflineStoragePath(configPath.path());
-    #elif defined(Q_OS_ANDROID)
+#elif defined(Q_OS_ANDROID)
         viewer.engine()->setOfflineStoragePath("/data/data/at.beatthescore/");
-    #else
+#else
     // Windows here
-    #endif
+#endif
 
     cout << "viewer.engine()->offlineStoragePath() " << viewer.engine()->offlineStoragePath().toStdString() << endl;
+
+    bool alwaysShowSearch = false;
+#ifdef Q_OS_LINUX
+    alwaysShowSearch = !!getenv("SNAP");
+#endif
 
     #ifdef Q_OS_ANDROID
     //freopen ("/storage/emulated/0/bts_log.txt","w",stdout);
@@ -110,6 +115,7 @@ int main(int argc, char *argv[])
     game->setLicenseManager(licenseManager);
     qmlRegisterType<LicenseManager>("LicenseManager", 1, 0, "LicenseManager");
     viewer.rootContext()->setContextProperty("licenseManager", licenseManager);
+    viewer.rootContext()->setContextProperty("alwaysShowSearch", alwaysShowSearch);
 
     viewer.setMainQmlFile(QStringLiteral("qml/DisplayLoader.qml"));
     viewer.showExpanded();

@@ -17,13 +17,13 @@ apps:
     command-chain:
       - bin/gpu-2404-wrapper
       - bin/lomiri-launch
+      - bin/default-scores
     plugs:
       - opengl
       - wayland
       - mir
       - x11
       - desktop
-      #- raw-usb
       - alsa
       - audio-record
       - audio-playback
@@ -87,7 +87,7 @@ parts:
     plugin: dump
     source: snap/local
     prime:
-      - bin/pulseenv
+      - bin/default-scores
 
   gpu-2404:
     after:

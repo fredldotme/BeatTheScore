@@ -286,7 +286,7 @@ NavigatablePanel {
                             // aspect ratio of the graphic is 8:1
                             width: height * 8
                             anchors.bottom: parent.bottom
-                            visible: false
+                            visible: alwaysShowSearch
                             onFilterTextChanged: {
                                 if (text === "") {
                                     scoreListView.forceActiveFocus()
@@ -296,6 +296,8 @@ NavigatablePanel {
 
                         onHeaderDoubleClicked: {
                             scoreSearch.visible = !scoreSearch.visible
+                            if (alwaysShowSearch)
+                                scoreSearch.visible = true
                             scoreSearch.focus = scoreSearch.visible
                         }
 
