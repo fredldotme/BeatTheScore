@@ -40,6 +40,13 @@ Q_DECLARE_METATYPE(Track*)
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+    if (const auto snapEnv = getenv("SNAP")) {
+        const auto resourceRoot = std::string(snapEnv) + "/opt/BeatTheScore";
+        chdir(resourceRoot.c_str());
+    }
+#endif
+
     QApplication app(argc, argv);
     QtQuick2ApplicationViewer viewer;
 

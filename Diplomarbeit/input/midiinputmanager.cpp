@@ -50,7 +50,7 @@ MidiInputManager::MidiInputManager()
 
 QList<QPointer<Input>> MidiInputManager::getInputs(QObject *parent)
 {
-#if 0
+#if 1
     RtMidiIn  *midiin = 0;
 
     // RtMidiIn constructor
@@ -59,6 +59,7 @@ QList<QPointer<Input>> MidiInputManager::getInputs(QObject *parent)
     }
     catch ( RtError &error ) {
         error.printMessage();
+        return QList<QPointer<Input>>();
     }
 
     // Check inputs.

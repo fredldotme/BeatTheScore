@@ -32,7 +32,7 @@ QList<QPointer<Input>> AudioInputManager::getInputs(QObject *parent)
     format.setSampleType(QAudioFormat::UnSignedInt);
 
     QList<QPointer<Input>> audioInputs;
-    #ifndef Q_OS_ANDROID
+#ifdef Q_OS_WINDOWS
     QList<QAudioDeviceInfo> infos = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
     for (unsigned int i=0; i<infos.size(); i++) {
         if (!infos[i].isFormatSupported(format)) {
@@ -41,6 +41,17 @@ QList<QPointer<Input>> AudioInputManager::getInputs(QObject *parent)
         }
         audioInputs.append(new AudioInput(parent, new QAudioInput(infos[i], format), infos[i].deviceName()));
     }
-    #endif
+#elif defined(Q_OS_LINUX)
+    auto defaultInput = QAudioDeviceInfo::defaultInputDevice();
+    if (!defaultInput.isFormatSupported(format)) {
+        static bool warnOnce = false;
+        if (!warnOnce) {
+            cout << "preferred format not supported, try to use nearest" << endl;
+            warnOnce = true;
+        }
+        format = defaultInput.nearestFormat(format);
+    }
+    audioInputs.append(new AudioInput(parent, new QAudioInput(defaultInput, format), defaultInput.deviceName()));
+#endif
     return audioInputs;
 }

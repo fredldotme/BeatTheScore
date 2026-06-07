@@ -97,7 +97,7 @@ void MainGame::refreshInputList()
     }
     existingInputs.push(demoInput->getName());
 
-    #ifndef Q_OS_ANDROID
+#ifndef Q_OS_ANDROID
         QList<QPointer<Input>> midiInputs = midiInputManager.getInputs(0);
         for(int i = 0; i < midiInputs.count(); i++) {
             if(!isInputInList(midiInputs[i])) {
@@ -110,7 +110,7 @@ void MainGame::refreshInputList()
             }
             existingInputs.push(midiInputs[i]->getName());
         }
-    #else
+#else
         if(androidGlue != NULL && androidGlue->isConnected()) {
             QPointer<Input> androidMidiQPtr = QPointer<Input>(new MidiInput(0, 0));
             if (!isInputInList(androidMidiQPtr)) {
@@ -124,10 +124,10 @@ void MainGame::refreshInputList()
             }
             existingInputs.push(androidMidiQPtr->getName());
         }
-    #endif
+#endif
 
     // Append AFTER loop; do not connect Audio Inputs to NoteOutput
-    if(isDesktop() && showAudioInputs) {
+    if(/*isDesktop() &&*/ showAudioInputs) {
         QList<QPointer<Input>> audioInputs = AudioInputManager::getInputs(0);
         for(int i = 0; i < audioInputs.size(); i++) {
             if(!isInputInList(audioInputs[i])) {
@@ -398,10 +398,10 @@ QString MainGame::selectSong(QString filename)
     cout << "Loading song " << filename.toStdString() << endl;
 
     this->selectedFilename = filename;
-    if (!score.isNull())
+    /*if (!score.isNull())
     {
         delete score;
-    }
+    }*/
     score = QPointer<Score>(new Score());
     GP5Reader reader;
     return QString::fromStdString(reader.read(score, filename));
@@ -649,12 +649,18 @@ void MainGame::connectPlayer(Input *input, int trackIndex)
 
 void MainGame::connectToUI(Input *input)
 {
+    if (!input)
+        return;
+
     connect(input, &Input::noteOn, this->getUiCommandHandler().data(), &SoundNavigationHandler::noteOn, Qt::UniqueConnection);
     connect(input, &Input::noteOff, this->getUiCommandHandler().data(), &SoundNavigationHandler::noteOff, Qt::UniqueConnection);
 }
 
 void MainGame::disconnectFromUI(Input *input)
 {
+    if (!input)
+        return;
+
     disconnect(input, &Input::noteOn, this->getUiCommandHandler().data(), &SoundNavigationHandler::noteOn);
     disconnect(input, &Input::noteOff, this->getUiCommandHandler().data(), &SoundNavigationHandler::noteOff);
 }
@@ -765,13 +771,17 @@ void MainGame::licenseValidityChanged()
 
 LicenseState MainGame::getLicenseState()
 {
+#ifdef Q_OS_WINDOWS
     if(isDesktop()) {
         return this->licenseState;
-    } else {
+    }
+#else
+    {
         /* On Android we could check the actual license via the Play Store,
            but that would involve a lot of JNI headaches. */
         return LicenseState::LICENSED;
     }
+#endif
 }
 
 void MainGame::pauseMenuHandler(State state)
@@ -797,11 +807,13 @@ void MainGame::resultScreenHandler(State newState)
 
 bool MainGame::isDesktop()
 {
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     return false;
-    #else
+#elif defined(Q_OS_LINUX)
     return true;
-    #endif
+#else
+    return true;
+#endif
 }
 
 bool MainGame::isReplayMode()

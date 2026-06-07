@@ -1339,7 +1339,7 @@ void MidiInAlsa :: initialize( const std::string& clientName )
     if ( seq == NULL ) {
         s_seq = NULL;
         std::cout << "MidiInAlsa::initialize: error creating ALSA sequencer client object." << std::endl;
-        //RtMidi::error( RtError::DRIVER_ERROR, errorString_ );
+        RtMidi::error( RtError::DRIVER_ERROR, errorString_ );
         return;
     }
 

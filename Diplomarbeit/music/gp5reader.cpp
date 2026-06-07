@@ -940,9 +940,11 @@ string GP5Reader::read(QPointer<Score> score, QString filename)
                                         tieStarts[trackIndex].insert(stringIndex, note);
                                     }
                                     //cout << "pitch = " << note->getPitch() << " ";
-                                    for (int i=0; i<stringPitchShift.size(); i++)
+                                    for (size_t i=0; i<stringPitchShift.size(); i++)
                                     {
-                                        note->addPitchShift(stringPitchShift[i].time, stringPitchShift[i].pitchShift);
+                                        auto time = stringPitchShift[i].time;
+                                        auto pitchShift = stringPitchShift[i].pitchShift;
+                                        note->addPitchShift(time, pitchShift);
                                     }
                                     previousNotes[trackIndex].insert(stringIndex, note);
                                     score->tracks[trackIndex]->addNote(note);

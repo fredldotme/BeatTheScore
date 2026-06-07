@@ -299,21 +299,35 @@ Note::Note(QObject *parent)
     this->linking = LinkingType::none;
 }
 
-int Note::addPitchShift(int time, int shift)
+void Note::addPitchShift(int time, int shift)
 {
-    pitchShift.append(PitchShiftEvent(time, shift));
+    PitchShiftEvent event(time, shift);
+
+#if 0
+    for (const auto& existingEvent : pitchShift) {
+        if (existingEvent.time == event.time &&
+            existingEvent.pitchShift == event.pitchShift)
+        {
+            return;
+        }
+    }
+#endif
+
+    pitchShift.append(event);
 }
 
 int Note::getPitchShift(int time)
 {
-    if (pitchShift.size() == 0)
+    if (pitchShift.isEmpty() || pitchShift.size() == 0)
     {
         return 0;
     }
+
     if (time < pitchShift[0].time)
     {
         return pitchShift[0].pitchShift;
     }
+
     for (int i=1; i<pitchShift.size(); i++)
     {
         if (time < pitchShift[i].time)
@@ -323,5 +337,6 @@ int Note::getPitchShift(int time)
             return pitchShift[i - 1].pitchShift * (1 - position) + pitchShift[i].pitchShift * position;
         }
     }
+
     return pitchShift.last().pitchShift;
 }

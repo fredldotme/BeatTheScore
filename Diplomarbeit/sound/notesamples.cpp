@@ -35,19 +35,27 @@ void NoteSamples::startPitching()
 
     //Pull in buffers from existing files
     QString dirPath;
+
+#ifdef Q_OS_LINUX
+    // Find .wav's in Snap package
+    if (getenv("SNAP")) {
+        dirPath = QString::fromUtf8(qgetenv("SNAP")) + QStringLiteral("/opt/BeatTheScore/");
+    }
+#endif
+
     if (instrument == MusicInstrument::Guitar) {
-        dirPath = "wav/guitar/clean/";
+        dirPath += "wav/guitar/clean/";
     } else if (instrument == MusicInstrument::EGuitar) {
-        dirPath = "wav/guitar/electric/";
+        dirPath += "wav/guitar/electric/";
     } else if (instrument == MusicInstrument::BassGuitar) {
-        dirPath = "wav/guitar/bass/";
+        dirPath += "wav/guitar/bass/";
     } else if (instrument == MusicInstrument::Piano) {
-        dirPath = "wav/piano/";
+        dirPath += "wav/piano/";
     }
 
-    #ifdef Q_OS_ANDROID
-        dirPath = "assets:/" + dirPath;
-    #endif
+#ifdef Q_OS_ANDROID
+    dirPath = "assets:/" + dirPath;
+#endif
 
     QStringList fileFilter;
 

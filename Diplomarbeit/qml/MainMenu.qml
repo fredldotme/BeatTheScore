@@ -41,7 +41,7 @@ NavigatablePanel {
 
 
         Image {
-            source: mainGame.isDesktop ? "../graphics/logo.png" : "assets:/graphics/logo.png"
+            source: mainGame.isDesktop() ? "../graphics/logo.png" : "assets:/graphics/logo.png"
             width: mainView.width / 2
             height: mainView.width / 2 *  sourceSize.height /  sourceSize.width
             anchors.top: parent.top

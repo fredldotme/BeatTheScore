@@ -20,10 +20,10 @@ apps:
     plugs:
       - opengl
       - wayland
+      - mir
       - x11
-      - home
-      - removable-media
-      - raw-usb
+      - desktop
+      #- raw-usb
       - alsa
       - audio-record
       - audio-playback
@@ -59,6 +59,7 @@ parts:
     build-snaps:
       - lomiri-ui-toolkit-core24
     build-packages:
+      - wget
       - qtbase5-dev
       - qtbase5-dev-tools
       - qtdeclarative5-dev
@@ -76,7 +77,9 @@ parts:
     override-prime: |
       craftctl default
       mkdir -p ${CRAFT_PRIME}/bin
-      cp -a /snap/lomiri-ui-toolkit-core24/current/command-chain/lomiri-launch ${CRAFT_PRIME}/bin/lomiri-launch
+      wget "https://gitlab.com/ubports/development/core/packaging/snaps/lomiri-ui-toolkit-core24/-/raw/main/misc/command-chain/lomiri-launch"
+      mv lomiri-launch ${CRAFT_PRIME}/bin/lomiri-launch
+      chmod 755 ${CRAFT_PRIME}/bin/lomiri-launch
 
   misc:
     after:

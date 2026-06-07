@@ -28,7 +28,7 @@ vector<string> MidiOutput::getOutputPortList()
     }
     catch ( RtError &error ) {
         error.printMessage();
-        exit( EXIT_FAILURE );
+        //exit( EXIT_FAILURE );
     }
 
     // Check outputs.

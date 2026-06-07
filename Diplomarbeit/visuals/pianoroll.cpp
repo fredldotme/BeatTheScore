@@ -76,13 +76,22 @@ QSGNode *PianoRoll::getDisplayOptionSpecificNodes()
             }
         }
 
-        QSGSimpleTextureNode* pianoNode = new QSGSimpleTextureNode();
-        QRectF pianoRect = QRectF(boundingRect().left(), getYForPitch(i - 1), octaveHeight / 2, octaveHeight);
-        pianoNode->setTexture(pianoTexture);
-        pianoNode->setRect(pianoRect);
-        node->appendChildNode(pianoNode);
+        QRectF pianoRect = QRectF(boundingRect().left(),
+                                  getYForPitch(i - 1),
+                                  octaveHeight / 2,
+                                  octaveHeight);
 
-        node->appendChildNode(getNumberNode(i / 12 - 2, pitchHeight, pitchHeight, pianoRect.bottom() - pitchHeight));
+        if (pianoTexture)
+        {
+            QSGSimpleTextureNode* pianoNode = new QSGSimpleTextureNode();
+            pianoNode->setTexture(pianoTexture);
+            pianoNode->setRect(pianoRect);
+            node->appendChildNode(pianoNode);
+        }
+
+        auto numberNode = getNumberNode(i / 12 - 2, pitchHeight, pitchHeight, pianoRect.bottom() - pitchHeight);
+        if (numberNode)
+            node->appendChildNode(numberNode);
     }
 
     return node;

@@ -250,8 +250,9 @@ NavigatablePanel {
                         onSelectedItemChanged: {
                             console.log("onSelectedItemChanged(" + selectedItem + ")")
                             if (scoreListView.selectedItem !== null) {
-                                var result = mainGame.selectSong(scoreListView.currentItem.dataOfItem.modelData.getFileName())
-                                console.log(result)
+                                const path = scoreListView.selectedItem.dataOfItem.modelData.getFileName();
+                                const result = mainGame.selectSong(path)
+                                console.log("result: " + result)
                                 if (result === "") {
                                     sectionPreview.loadSections()
                                     addSectionsToFocusChain()

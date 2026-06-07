@@ -58,7 +58,7 @@ public:
     Note(QObject *parent=0);
 
     QList<PitchShiftEvent> pitchShift; // pitch shift as (time, pitch) pair
-    int addPitchShift(int time, int pitchShift);
+    void addPitchShift(int time, int pitchShift);
     int getPitchShift(int time);
     int getTime() const;
     int getDuration() const;

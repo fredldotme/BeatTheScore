@@ -3,19 +3,20 @@ TARGET = BeatTheScore
 TEMPLATE = lib
 
 folder_01.source = qml
-#folder_02.source = wav/guitar
+folder_02.source = wav/guitar
 folder_02.target = wav
 folder_03.source = wav/drum
 folder_03.target = wav
-#folder_04.source = wav/piano
-#folder_04.target = wav
+folder_04.source = wav/piano
+folder_04.target = wav
 folder_05.source = scores
-#folder_05.target = scores
+folder_05.target = scores
 folder_06.source = graphics
 folder_07.source = html
 folder_08.source = css
 
 DEPLOYMENTFOLDERS = folder_01 folder_02 folder_03 folder_04 folder_05 folder_06 folder_07 folder_08
+#INSTALLS += folder_01 folder_02 folder_03 folder_04 folder_05 folder_06 folder_07 folder_08
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -55,6 +56,11 @@ QT += multimedia sql svg
 
 TEMPLATE = app
 CONFIG += console
+
+unix {
+    CONFIG += debug
+    INSTALLS.CONFIG += nostrip
+}
 
 QMAKE_CXXFLAGS += -std=c++0x -g
 

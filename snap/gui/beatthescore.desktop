@@ -4,3 +4,6 @@ Name=Beat The Score
 Comment=A Music Instrument Learning Drill Program
 Icon=${SNAP}/meta/gui/beatthescore.png
 Exec=beatthescore
+X-Lomiri-Touch=true
+X-Lomiri-Splash-Color=#444341
+X-Lomiri-Splash-Image=meta/gui/beatthescore-logo.png

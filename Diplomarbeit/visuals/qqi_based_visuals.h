@@ -66,8 +66,7 @@ protected:
     int startIndex;
     int startMs;
 
-
-    bool texturesAvailable;
+    bool texturesAvailable = false;
 
     QSGTexture* loadTextureFromSVG(QString texturePath, qreal width, qreal height);
 
