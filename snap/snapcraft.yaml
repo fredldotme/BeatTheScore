@@ -6,17 +6,19 @@ summary: Beat The Score music instrument learning program
 description: |
   Beat The Score helps you learn your favorite music instrument with ease!
 
-  This app supports loading Guitar Pro 5 files, which can often be found for free on the
-  internet. These can be placed in `~/snap/beatthescore/current/Beat the Score` for easy
-  access. It then visualizes the session as either:
+  This app supports loading Guitar Pro 5 files with file names "*.gp5",
+  which can often be found for free on the internet. These can be placed
+  in `~/snap/beatthescore/common/` for easy access. It then visualizes the
+  session as either:
 
   - Piano Roll
   - Score
   - or Tablature
 
   Beat The Score gives you direct feedback about your accuracy of hitting notes and shows
-  you your total score at the end. There's also a "Training mode" that stops at every
-  note so that you can slowly focus on playing your instrument right.
+  you your total score at the end. It also allows you to replay a session afterwards.
+  There's also a "Training mode" that stops at every note so that you can slowly focus
+  on playing your instrument right.
 
   Supported instrument types:
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-mkdir -p "$HOME/Beat the Score"
+mkdir -p "$SNAP_USER_COMMON"
 
 for f in $SNAP/opt/BeatTheScore/scores/*.*; do
-    cp "$f" "$HOME/Beat the Score/"
+    cp "$f" "$SNAP_USER_COMMON/"
 done
 
 exec "$@"

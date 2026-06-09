@@ -489,7 +489,7 @@ void MainGame::togglePause()
 
 QString MainGame::getScoresPath()
 {
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
     QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
     QString dataAbsPath = mediaPath.toString()+"/Scores/";
@@ -499,20 +499,23 @@ QString MainGame::getScoresPath()
         env->ExceptionClear();
     }
     return dataAbsPath;
-    #else
-    #ifdef Q_OS_LINUX
-    QDir scorePath(QString(getenv("HOME")) + "/Beat the Score");
+#else
+#ifdef Q_OS_LINUX
+    const auto path = !!getenv("SNAP_USER_COMMON") ?
+                          QString(getenv("SNAP_USER_COMMON")) :
+                          QString(getenv("HOME")) + QStringLiteral("/Beat the Score");
+    QDir scorePath(path);
     if(!scorePath.exists()) {
         scorePath.mkdir(scorePath.path());
     }
     return scorePath.absolutePath();
-    #else
+#else
     QDir scorePath(QString(getenv("HOMEDRIVE")) + QString(getenv("HOMEPATH")) + "/Beat the Score");
     if(!scorePath.exists()) {
         scorePath.mkdir(scorePath.path());
     }
     return scorePath.absolutePath();
-    #endif
+#endif
 #endif
 }
 
