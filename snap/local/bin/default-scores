@@ -2,7 +2,7 @@
 
 mkdir -p "$SNAP_USER_COMMON"
 
-for f in $SNAP/opt/BeatTheScore/scores/*.*; do
+for f in $SNAP/opt/BeatTheScore/scores/scores/*.gp5; do
     cp "$f" "$SNAP_USER_COMMON/"
 done
 
