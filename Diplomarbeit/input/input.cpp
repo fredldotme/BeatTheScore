@@ -6,7 +6,7 @@ Input::Input() {
 
 QString Input::getName()
 {
-    return "Demo";
+    return "No input";
 }
 
 void Input::listen()
