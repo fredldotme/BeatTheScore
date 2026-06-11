@@ -1,6 +1,7 @@
 #include "audioinputmanager.h"
 #include "QList"
 #include <QAudioDeviceInfo>
+#include "../game/maingame.h"
 
 AudioInputManager::AudioInputManager()
 {
@@ -19,7 +20,7 @@ QStringList AudioInputManager::getInputPortList()
     return audioInputs;
 }
 
-QList<QPointer<Input>> AudioInputManager::getInputs(QObject *parent)
+QList<QPointer<Input>> AudioInputManager::getInputs(MainGame* game, QObject *parent)
 {
     QAudioFormat format;
     // set up the format you want, eg.
@@ -32,26 +33,28 @@ QList<QPointer<Input>> AudioInputManager::getInputs(QObject *parent)
     format.setSampleType(QAudioFormat::UnSignedInt);
 
     QList<QPointer<Input>> audioInputs;
-#ifdef Q_OS_WINDOWS
-    QList<QAudioDeviceInfo> infos = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-    for (unsigned int i=0; i<infos.size(); i++) {
-        if (!infos[i].isFormatSupported(format)) {
-            cout << "preffered format not supported try to use nearest" << endl;
-            format = infos[i].nearestFormat(format);
+
+    if (game->isDesktop()) {
+        QList<QAudioDeviceInfo> infos = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
+        for (unsigned int i=0; i<infos.size(); i++) {
+            if (!infos[i].isFormatSupported(format)) {
+                cout << "preffered format not supported try to use nearest" << endl;
+                format = infos[i].nearestFormat(format);
+            }
+            audioInputs.append(new AudioInput(parent, new QAudioInput(infos[i], format), infos[i].deviceName()));
         }
-        audioInputs.append(new AudioInput(parent, new QAudioInput(infos[i], format), infos[i].deviceName()));
-    }
-#elif defined(Q_OS_LINUX)
-    auto defaultInput = QAudioDeviceInfo::defaultInputDevice();
-    if (!defaultInput.isFormatSupported(format)) {
-        static bool warnOnce = false;
-        if (!warnOnce) {
-            cout << "preferred format not supported, try to use nearest" << endl;
-            warnOnce = true;
+    } else {
+        auto defaultInput = QAudioDeviceInfo::defaultInputDevice();
+        if (!defaultInput.isFormatSupported(format)) {
+            static bool warnOnce = false;
+            if (!warnOnce) {
+                cout << "preferred format not supported, try to use nearest" << endl;
+                warnOnce = true;
+            }
+            format = defaultInput.nearestFormat(format);
         }
-        format = defaultInput.nearestFormat(format);
+        audioInputs.append(new AudioInput(parent, new QAudioInput(defaultInput, format), QStringLiteral("Default audio input")));
     }
-    audioInputs.append(new AudioInput(parent, new QAudioInput(defaultInput, format), QStringLiteral("Default audio input")));
-#endif
+
     return audioInputs;
 }

@@ -6,12 +6,14 @@
 
 #include "audioinput.h"
 
+class MainGame;
+
 class AudioInputManager
 {
 public:
     AudioInputManager();
     static QStringList getInputPortList();
-    static QList<QPointer<Input>>  getInputs(QObject *parent);
+    static QList<QPointer<Input>> getInputs(MainGame* game, QObject *parent);
 };
 
 #endif // AUDIOINPUTMANAGER_H

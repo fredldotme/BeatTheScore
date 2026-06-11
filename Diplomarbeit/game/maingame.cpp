@@ -127,8 +127,8 @@ void MainGame::refreshInputList()
 #endif
 
     // Append AFTER loop; do not connect Audio Inputs to NoteOutput
-    if(/*isDesktop() &&*/ showAudioInputs) {
-        QList<QPointer<Input>> audioInputs = AudioInputManager::getInputs(0);
+    if(showAudioInputs) {
+        QList<QPointer<Input>> audioInputs = AudioInputManager::getInputs(this, 0);
         for(int i = 0; i < audioInputs.size(); i++) {
             if(!isInputInList(audioInputs[i])) {
                 /*if (audioInputs[i]->thread() == checker)
@@ -628,9 +628,7 @@ QStringList MainGame::getAvailableModes()
     QStringList list;
     list.append(QString("Piano Roll"));
     list.append(QString("Score"));
-    if(isDesktop()) {
-        list.append(QString("Tablature"));
-    }
+    list.append(QString("Tablature"));
     return list;
 }
 
@@ -810,12 +808,12 @@ void MainGame::resultScreenHandler(State newState)
 
 bool MainGame::isDesktop()
 {
-#ifdef Q_OS_ANDROID
-    return false;
-#elif defined(Q_OS_LINUX)
+#if defined(__x86_64__) || defined(_M_X64)
+    return true;
+#elif defined(i386) || defined(__i386__) || defined(__i386) || defined(_M_IX86)
     return true;
 #else
-    return true;
+    return false;
 #endif
 }
 
