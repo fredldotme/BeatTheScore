@@ -2,7 +2,7 @@ name: beatthescore
 title: Beat The Score
 version: latest
 base: core24
-summary: Beat The Score music instrument learning program
+summary: Beat The Score music instrument learning game
 description: |
   Beat The Score helps you learn your favorite music instrument with ease!
 
@@ -23,7 +23,7 @@ description: |
   Supported instrument types:
 
   - MIDI keyboards
-  - Guitars using audio analysis through the microphone
+  - Guitars through audio input analysis
 
   Released under the GNU GPLv2+.
 
@@ -83,8 +83,6 @@ parts:
     plugin: qmake
     source: .
     qmake-project-file: Diplomarbeit/Diplomarbeit.pro
-    build-snaps:
-      - lomiri-ui-toolkit-core24
     build-packages:
       - wget
       - qtbase5-dev
