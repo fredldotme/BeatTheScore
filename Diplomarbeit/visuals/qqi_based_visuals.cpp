@@ -302,13 +302,13 @@ QSGNode* QQI_Based_Visuals::getTargetNotes() {
 
 
 QSGSimpleRectNode* QQI_Based_Visuals::getNodeForNote(QPointer<Note> note, bool isFromScore) {
-
+    return nullptr;
 }
 
 
 QSGNode *QQI_Based_Visuals::getDisplayOptionSpecificNodes()
 {
-
+    return nullptr;
 }
 
 
@@ -384,7 +384,7 @@ QSGSimpleRectNode* QQI_Based_Visuals::getBorderedRectangleNode(qreal left, qreal
 
     QRectF subNodeRectangle = noteRectangle;
     subNodeRectangle.setTop(top + lineWidth);
-    subNodeRectangle.setLeft(left + lineWidth);
+	    subNodeRectangle.setLeft(left + lineWidth);
     subNodeRectangle.setWidth(width - lineWidth * 2);
     subNodeRectangle.setHeight(height - lineWidth * 2);
     newRectNode->setFlag(QSGNode::OwnedByParent);
@@ -528,9 +528,10 @@ QImage QQI_Based_Visuals::createSubImage(QImage* image, const QRect & rect) // b
 
 QSGTexture* QQI_Based_Visuals::loadTextureFromSVG(QString texturePath, qreal width, qreal height)
 {
-    if(!game->isDesktop()) {
-        texturePath = QString("assets:/") + texturePath;
-    }
+#if defined(Q_OS_ANDROID)
+    texturePath = QString("assets:/") + texturePath;
+#endif
+
     QSvgRenderer svgRenderer(texturePath);
     QImage image(width, height, QImage::Format_ARGB32);
     image.fill(0xFFFFFF);

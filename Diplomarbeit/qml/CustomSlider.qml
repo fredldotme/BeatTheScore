@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 HighlightableItem {
+    id: itemRoot
+
     property alias fontColor: labelText.color
     property color fontBorderColor: "black"
     property double value: 50
@@ -13,6 +15,7 @@ HighlightableItem {
     property string label
     property int labelFontSize : standardHeaderPixelSize
     property string unit
+    readonly property bool isOnDisk : true
     backgroundSource: ""
     highlightOn: focus
 
@@ -49,13 +52,13 @@ HighlightableItem {
 
             Image {
                 id: sliderBase
-                source: mainGame.isDesktop() ? "../graphics/slider_base.png" : "assets:/graphics/slider_base.png"
+                source: itemRoot.isOnDisk ? "../graphics/slider_base.png" : "assets:/graphics/slider_base.png"
                 anchors.fill: parent
             }
 
             Image {
                 id: sliderHandle
-                source: mainGame.isDesktop() ? "../graphics/slider_handle.png" : "assets:/graphics/slider_handle.png"
+                source: itemRoot.isOnDisk ? "../graphics/slider_handle.png" : "assets:/graphics/slider_handle.png"
 
                 height: parent.height
                 width: height * .5

@@ -283,11 +283,13 @@ void ScoreView::loadNoteTexture(int i, QRgb color, QSGTexture **destination)
 {
     QString texturePath("");
     QRgb black = qRgba(255, 255, 255, 255);
-    if(game->isDesktop()) {
-        texturePath = QString("graphics/notes/") + QString::number(i+1) + QString(".svg");
-    } else {
-        texturePath = QString("assets:/graphics/notes/") + QString::number(i+1) + QString(".svg");
-    }
+
+#if !defined(Q_OS_ANDROID)
+    texturePath = QString("graphics/notes/") + QString::number(i+1) + QString(".svg");
+#else
+    texturePath = QString("assets:/graphics/notes/") + QString::number(i+1) + QString(".svg");
+#endif
+
     QSvgRenderer svgRenderer(texturePath);
     QImage noteImage(noteWidth, noteHeight, QImage::Format_ARGB32);
     noteImage.fill(0xFFFFFF);

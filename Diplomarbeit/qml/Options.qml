@@ -10,7 +10,7 @@ NavigatablePanel {
         focusComponents.push(showAudioInputsCheckBox)
         focusComponents.push(samplingSlider)
         focusComponents.push(backButton)
-        focusComponents.push(saveButton)
+        //focusComponents.push(saveButton)
         focusComponents.push(saveAndBackButton)
     }
 
@@ -20,10 +20,8 @@ NavigatablePanel {
             function(tx) {
                 writePreferenceToDB(tx, 'KeepPreferences', keepPreferencesCheckBox.checked)
 
-                if(mainGame.isDesktop()) {
-                    writePreferenceToDB(tx, 'ShowAudioInputs', showAudioInputsCheckBox.checked)
-                    mainGame.toggleAudioInputs(showAudioInputsCheckBox.checked);
-                }
+                writePreferenceToDB(tx, 'ShowAudioInputs', showAudioInputsCheckBox.checked)
+                mainGame.toggleAudioInputs(showAudioInputsCheckBox.checked);
 
                 writePreferenceToDB(tx, 'AudioLatency', samplingSlider.value)
                 mainGame.setLatency(samplingSlider.value);
@@ -50,7 +48,7 @@ NavigatablePanel {
             id: showAudioInputsCheckBox
             text: qsTr("Show audio inputs")
             checked: showAudioInputs
-            visible: mainGame.isDesktop()
+            visible: true
             height: lineHeight
             width: window.width
         }
@@ -109,23 +107,8 @@ NavigatablePanel {
             }
 
             CustomButton {
-                id: saveButton
-                buttonText: qsTr("Save")
-
-                width: standardItemWidth
-                height: sectionHeight
-
-                fontColor: standardFontColor
-                bold: true
-                z: 1
-                onClicked: {
-                    storeOptions()
-                }
-            }
-
-            CustomButton {
                 id: saveAndBackButton
-                buttonText: qsTr("Save and Back")
+                buttonText: qsTr("Save")
 
                 width: standardItemWidth
                 height: sectionHeight

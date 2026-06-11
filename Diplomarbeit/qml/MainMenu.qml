@@ -19,10 +19,8 @@ NavigatablePanel {
             function(tx) {
                 // Query Database
                 keepPreferences = Number(askDB(tx, 'KeepPreferences', 1))  === Number(1) ? true : false;
-                if(mainGame.isDesktop()) {
-                    showAudioInputs = Number(askDB(tx, 'ShowAudioInputs', 1))  === Number(1) ? true : false;
-                    mainGame.toggleAudioInputs(showAudioInputs)
-                }
+                showAudioInputs = Number(askDB(tx, 'ShowAudioInputs', 1))  === Number(1) ? true : false;
+                mainGame.toggleAudioInputs(showAudioInputs)
                 audioLatency = Number(askDB(tx, 'AudioLatency', 10));
                 mainGame.setLatency(audioLatency);
 
@@ -41,7 +39,8 @@ NavigatablePanel {
 
 
         Image {
-            source: mainGame.isDesktop() ? "../graphics/logo.png" : "assets:/graphics/logo.png"
+            // TODO: reintroduce on Android
+            source: "../graphics/logo.png"
             width: mainView.width / 2
             height: mainView.width / 2 *  sourceSize.height /  sourceSize.width
             anchors.top: parent.top
