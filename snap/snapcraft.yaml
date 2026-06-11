@@ -102,9 +102,7 @@ parts:
     override-prime: |
       craftctl default
       mkdir -p ${CRAFT_PRIME}/bin
-      wget "https://gitlab.com/ubports/development/core/packaging/snaps/lomiri-ui-toolkit-core24/-/raw/main/misc/command-chain/lomiri-launch"
-      mv lomiri-launch ${CRAFT_PRIME}/bin/lomiri-launch
-      chmod 755 ${CRAFT_PRIME}/bin/lomiri-launch
+      cp -a /snap/lomiri-ui-toolkit-core24/current/command-chain/lomiri-launch ${CRAFT_PRIME}/bin/
 
   misc:
     after:
@@ -124,3 +122,14 @@ parts:
       ${CRAFT_PART_SRC}/bin/gpu-2404-cleanup mesa-2404
     prime:
       - bin/gpu-2404-wrapper
+
+  cleanup:
+    after:
+      - gpu-2404
+    plugin: nil
+    build-snaps:
+      - lomiri-ui-toolkit-core24
+    override-prime: |
+      craftctl default
+      cd /snap/lomiri-ui-toolkit-core24/current
+      find . -type f,l -exec rm -f ${CRAFT_PRIME}/{} \;
