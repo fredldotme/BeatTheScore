@@ -5,6 +5,8 @@
 #include "../music/noteutils.h"
 #include <kiss_fft.h>
 
+#include <QDebug>
+
 float interpolate(float *array, float index, int size)
 {
     if (index + 1 < 0 || index + 2 >= size)
@@ -364,9 +366,10 @@ InputType AudioInput::getType()
     return AUDIO;
 }
 
-void AudioInput::listen()
+bool AudioInput::listen()
 {
     cout << "listen..." << endl;
+
     if(!isListening()) {
         long timeOffset =
                 chrono::time_point_cast<chrono::milliseconds>(
@@ -378,6 +381,8 @@ void AudioInput::listen()
         connect(analyser.data(), &AudioAnalyser::noteOff, this, &Input::noteOff);
         audioInput->start(analyser);
     }
+
+    return isListening();
 }
 
 void AudioInput::stop()

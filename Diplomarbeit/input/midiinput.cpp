@@ -44,7 +44,7 @@ MidiInput::MidiInput(QObject *parent, int port)
     //connect(thread, &MidiInputThread::noteOff, this, &MidiInput::noteOff);
 }
 
-void MidiInput::listen()
+bool MidiInput::listen()
 {
     if (!isListening()) {
         thread = new MidiInputThread(midiin, portNumber);
@@ -53,6 +53,8 @@ void MidiInput::listen()
         connect(thread, SIGNAL(deviceDisconnected()), this, SLOT(deviceDisconnectedBroker()), Qt::DirectConnection);
         thread->start();
     }
+
+    return isListening();
 }
 
 void MidiInput::deviceDisconnectedBroker()

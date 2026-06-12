@@ -71,7 +71,7 @@ public:
     ~MidiInput();
 
     MidiInput(QObject *parent, int port);
-    void listen();
+    bool listen();
     void stop();
     bool isListening();
     QString getName();

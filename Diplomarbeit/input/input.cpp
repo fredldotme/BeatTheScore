@@ -9,9 +9,10 @@ QString Input::getName()
     return "No input";
 }
 
-void Input::listen()
+bool Input::listen()
 {
     listening = true;
+    return true;
 }
 
 void Input::stop()

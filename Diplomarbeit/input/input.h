@@ -19,7 +19,7 @@ class Input : public QObject
 public:
     Input();
     virtual ~Input() {}
-    virtual void listen();
+    virtual bool listen();
     virtual void stop();
     virtual bool isListening();
     virtual QString getName();

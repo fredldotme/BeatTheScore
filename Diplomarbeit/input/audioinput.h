@@ -119,7 +119,7 @@ public:
 
     // Input interface
 public:
-    void listen();
+    bool listen();
     void stop();
     bool isListening();
     QString getName();
