@@ -19,7 +19,7 @@ NavigatablePanel {
             function(tx) {
                 // Query Database
                 keepPreferences = Number(askDB(tx, 'KeepPreferences', 1))  === Number(1) ? true : false;
-                showAudioInputs = Number(askDB(tx, 'ShowAudioInputs', 1))  === Number(1) ? true : false;
+                showAudioInputs = Number(askDB(tx, 'ShowAudioInputs', 1))  === Number(1) ? supportsAudioInput : false;
                 mainGame.toggleAudioInputs(showAudioInputs)
                 audioLatency = Number(askDB(tx, 'AudioLatency', 10));
                 mainGame.setLatency(audioLatency);

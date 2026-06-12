@@ -12,7 +12,7 @@ Rectangle {
     }
 
     Image {
-        source: mainGame.isDesktop() ? "../graphics/help_overlay.png" : "assets:/graphics/help_overlay.png"
+        source: "../graphics/help_overlay.png"
         anchors.fill: parent
     }
 }

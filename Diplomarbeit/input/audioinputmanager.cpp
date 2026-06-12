@@ -53,7 +53,10 @@ QList<QPointer<Input>> AudioInputManager::getInputs(MainGame* game, QObject *par
             }
             format = defaultInput.nearestFormat(format);
         }
-        audioInputs.append(new AudioInput(parent, new QAudioInput(defaultInput, format), QStringLiteral("Default audio input")));
+
+        auto multimediaInput = new QAudioInput(defaultInput, format);
+        auto audioInput = new AudioInput(parent, multimediaInput, QStringLiteral("Audio input"));
+        audioInputs.append(audioInput);
     }
 
     return audioInputs;

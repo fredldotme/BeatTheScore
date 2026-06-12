@@ -97,19 +97,25 @@ int main(int argc, char *argv[])
 
     QPointer<MainGame> game = new MainGame();
 
-    #ifndef Q_OS_ANDROID
+#ifndef Q_OS_ANDROID
     QObject::connect(&app, SIGNAL(aboutToQuit()), game.data(), SLOT(cleanup()), Qt::DirectConnection);
     QObject::connect(&viewer, SIGNAL(closing(QQuickCloseEvent*)), game.data(), SLOT(cleanup()), Qt::DirectConnection);
-    #endif
+#endif
 
     game->setUiCommandHandler(uiCommandHandler);
 
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     game->setAndroidGlue(androidGlue);
-    #endif
+#endif
 
     qmlRegisterType<MainGame>("BeatTheScore", 1, 0, "MainGame");
     viewer.rootContext()->setContextProperty("mainGame", game);
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_WINDOWS)
+    viewer.rootContext()->setContextProperty("supportsAudioInput", true);
+#else
+    viewer.rootContext()->setContextProperty("supportsAudioInput", false);
+#endif
 
     QPointer<LicenseManager> licenseManager = new LicenseManager();
     game->setLicenseManager(licenseManager);
