@@ -25,6 +25,8 @@ description: |
   - MIDI keyboards
   - Guitars through audio input analysis
 
+  Copyright Alfred Neumayer, Felix Kugler, Daniel Novotny
+
   Released under the GNU GPLv2+.
 
 confinement: strict
