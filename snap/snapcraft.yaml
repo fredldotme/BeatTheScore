@@ -25,7 +25,9 @@ description: |
   - MIDI keyboards
   - Guitars through audio input analysis
 
-  Copyright Alfred Neumayer, Felix Kugler, Daniel Novotny
+  Note for systems using downstream kernels: Please ensure your kernel is built-with and providing ALSA MIDI via `/dev/snd/seq`.
+
+  Copyright 2026 Alfred Neumayer, Felix Kugler, Daniel Novotny
 
   Released under the GNU GPLv2+.
 
@@ -135,3 +137,4 @@ parts:
       craftctl default
       cd /snap/lomiri-ui-toolkit-core24/current
       find . -type f,l -exec rm -f ${CRAFT_PRIME}/{} \;
+      rm -rf ${CRAFT_PRIME}/usr/share/doc
