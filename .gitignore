@@ -100,3 +100,5 @@ diplomarbeit/Dokumente/Diplomarbeit.glo
 build/Desktop-Debug
 Libraries/cmake-build
 *.snap
+*.exe
+*.pdb
